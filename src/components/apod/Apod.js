@@ -139,7 +139,8 @@ const Apod = () => {
 
   return (
     <div>
-      <h5> APOD CONTENT </h5>
+      <h5>Choose a date to change the Picture of the Day</h5>
+      <p>The earliest date that can be chosen is June 16 1995</p>
 
       <form >
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -187,7 +188,7 @@ const Apod = () => {
 
           <div>
             <Media url={items.url}/>
-            <button onClick={closeModal}>close</button>
+            <Button  color="primary" onClick={closeModal}>close</Button>
           </div>
 
       </Modal>
