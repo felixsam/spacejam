@@ -56,12 +56,33 @@ const Apod = () => {
   let url = 'https://api.nasa.gov/planetary/apod?api_key=' + key + "&date=" + date;
 
   useEffect ( () => {
-    fetch(url)
-    .then((response) => response.json())
-    .then(json =>{
-      setItems(json);
-      setLoaded(true);
-    });
+
+    async function fetchAPOD(){
+
+      try{
+        const response = await fetch(url);
+      
+        const json = await response.json();
+
+        setItems(json);
+        setLoaded(true);
+      } catch(error){
+        setLoaded(false);
+      }
+
+      /*
+      fetch(url)
+      .then((response) => response.json())
+      .then(json =>{
+        setItems(json);
+        setLoaded(true);
+      });
+      */  
+    }
+
+    fetchAPOD();
+
+
     
   },[url]);
 
