@@ -7,7 +7,7 @@ class Home extends Component{
     return (
 
         <div>
-          <h1> NASA Picture of the Day </h1>
+          <h2> NASA SpaceJam Home Page </h2>
           <Apod></Apod>
           
         </div>
