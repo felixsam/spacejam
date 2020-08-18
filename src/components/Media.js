@@ -4,7 +4,7 @@ const Media = (props) => {
     if (props.url.includes("youtube")){
         return(
             <div>
-                <iframe src = {props.url} title="Youtube" height="100%" width="100%" allowFullScreen>
+                <iframe src = {props.url} title="Youtube" height="720" width="1280" allowFullScreen>
                     <p> Your Web browser does not support Iframes </p>
                 </iframe>
             </div>

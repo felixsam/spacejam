@@ -95,6 +95,18 @@ function createAsteroid(name, id, hazardous,magnitude,diameter,orbital_data){
   };
 }
 
+function toThreeDigits(value){
+
+  if (typeof(value) == "string"){
+    value = Number(value);
+  }
+  if (isNaN(value)){
+    return "N/A";
+  }else{
+    return value.toFixed(3);
+  }
+}
+
 function RowAsteroid(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -114,7 +126,7 @@ function RowAsteroid(props) {
         <TableCell align="center">{row.id}</TableCell>
         <TableCell align="center">{row.magnitude}</TableCell>
         <TableCell align="center">{row.isHazardous}</TableCell>
-        <TableCell align="center">{row.diameter_km.min.toPrecision(3)} to {row.diameter_km.max.toPrecision(3)}</TableCell>
+        <TableCell align="center">{toThreeDigits(row.diameter_km.min)} to {toThreeDigits(row.diameter_km.max)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -141,7 +153,7 @@ function RowAsteroid(props) {
                       <TableCell align="center">{orbitalRow.FirstObservationDate}</TableCell>
                       <TableCell align="center">{orbitalRow.LastObservationDate}</TableCell>
                       <TableCell align="center">
-                        {orbitalRow.OrbitalPeriod}
+                        {toThreeDigits(orbitalRow.OrbitalPeriod)}
                       </TableCell>
                     </TableRow>
                   ))}
