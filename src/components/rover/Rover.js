@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import Pagination from '@material-ui/lab/Pagination';
 
 import TextField from '@material-ui/core/TextField'
+import Modal from 'react-modal'
+import Media from '../Media'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,7 +47,16 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-
+  const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
 
 const Rover = () => {
     const classes = useStyles();
@@ -54,6 +65,7 @@ const Rover = () => {
     const[isLoaded, setLoaded] = useState(false);
     const[page,setPage] = useState(1);
     const[sol,setSol] = useState(1000);
+    const [photoURL,setPhotoURL] = useState("");
     
     let key = process.env.REACT_APP_NASA_API_KEY;
     let base_url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?'
@@ -75,6 +87,23 @@ const Rover = () => {
         .catch(error => alert(error))
     },[url]);
 
+    const [modalIsOpen,setIsOpen] = React.useState(false);
+
+    function openModal(pURL) {
+      setIsOpen(true);
+      console.log(pURL);
+      setPhotoURL(pURL);
+    }
+  
+    function afterOpenModal() {
+      // references are now sync'd and can be accessed.
+    }
+  
+    function closeModal(){
+      setIsOpen(false);
+    }
+
+    
     const handleChangePage =  (e,newPage) => {
         setPage(newPage);
         console.log("Setting Page to: " + newPage);
@@ -178,7 +207,7 @@ const Rover = () => {
                       title={<span>Photo ID: {photo.id}</span>}
                       subtitle={<span>From: {photo.camera.full_name}</span>}
                       actionIcon={
-                        <IconButton aria-label={`info about ${photo.id}`} className={classes.icon} onClick ={() => {alert("Test")}}> 
+                        <IconButton aria-label={`info about ${photo.id}`} className={classes.icon} onClick ={() => openModal(photo.img_src)}> 
                           <InfoIcon />
                         </IconButton>
                       }
@@ -195,6 +224,20 @@ const Rover = () => {
               onChange={handleChangePage}/>
             </div>
 
+
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal">
+
+          <div>
+            <Media url={photoURL}></Media>
+            <Button  color="primary" onClick={closeModal}>close</Button>
+          </div>
+
+        </Modal>
     </div>
     );
 
